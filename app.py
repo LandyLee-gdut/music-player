@@ -8,4 +8,4 @@ sys.path.insert(0, project_root)
 app = create_app()
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=21600)
+    app.run(debug=True, host='0.0.0.0', port=9000)
