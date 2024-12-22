@@ -1,9 +1,8 @@
 import os
 
 class Config:
-    # SQLite 数据库配置
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'instance', 'music_player.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db' # 推荐使用相对instance的路径
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-    # 允许所有来源的跨域请求
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev' # 只在开发环境使用'dev'，生产环境必须设置环境变量
     CORS_ORIGINS = "*"
+    CORS_HEADERS = "Content-Type"

@@ -1,10 +1,9 @@
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask import Blueprint
 from app.models.db import db
 
 class RecentlyPlayed(db.Model):
     __tablename__ = 'recently_played'
+
     id = db.Column(db.Integer, primary_key=True)
     song_id = db.Column(db.Integer, nullable=False, index=True)
     title = db.Column(db.String(255), nullable=False)
@@ -16,6 +15,7 @@ class RecentlyPlayed(db.Model):
     index = db.Column(db.Integer)
     lyric = db.Column(db.String(255))
     update_time = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    is_deleted = db.Column(db.Boolean, default=False)
 
     def __init__(self, song_item):
         self.song_id = song_item['id']
@@ -27,6 +27,7 @@ class RecentlyPlayed(db.Model):
         self.src = song_item['src']
         self.index = song_item.get('index')
         self.lyric = song_item.get('lyric')
+        self.is_deleted = False
 
     def to_dict(self):
         return {
@@ -39,5 +40,6 @@ class RecentlyPlayed(db.Model):
             'src': self.src,
             'index': self.index,
             'lyric': self.lyric,
-            'update_time': self.update_time.isoformat()
+            'update_time': self.update_time.isoformat(),
+            'is_deleted': self.is_deleted
         }
